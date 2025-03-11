@@ -1,0 +1,16 @@
+{
+  "name": "Google Chrome Extension Template (Rename me!)",
+  "description": "The description (update me!).",
+  "version": "0.0.1",
+  "background": {
+        "service_worker": "background.js"
+    },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {},
+  "icons": {
+  },
+  "manifest_version": 3
+}
