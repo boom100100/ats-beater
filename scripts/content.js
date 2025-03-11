@@ -29,34 +29,38 @@ port.onDisconnect.addListener((port) => {
 When the extension's action icon is clicked, send the app a message.
 */
 browser.browserAction.onClicked.addListener(() => {
-  // TODO: mvp: send the current page url
-  // have the native extension receive inputs
+  // TODO: does it work: send the current page url, 
+    // hardcode required values
+  // TODO: mvp: send the (url, resume local file, open, and delete) request
+    // have the native extension receive inputs
 
-  DEFAULT_WEBPAGE_URLS = [document.location.href];
-  DEFAULT_COUNT = 1; // how many local files to choose
+  // DEFAULT_COUNT = 1; // how many local files to choose
+  // DEFAULT_LOCAL_FILE_PATHS = ["/Users/bernadette/Downloads/Bernadette Davis Professional Resume Long.pdf"]; // resume file path // TODO: persist this value in the extension because the resume will likely be reused. CRUD
+  // DEFAULT_OUTPUT_FILE_NAME_WITHOUT_EXTENSION = "output"; // combined file name // TODO: make gui in chrome extension to set this value.
+  // DEFAULT_OUTPUT_DIRECTORY = "/Users/bernadette/Downloads"; // destination for generated files
+  // DEFAULT_WEBPAGE_URLS = [document.location.href]; // webpages to convert to pdf, download, and combine
+
+  // // // DEFAULT_WEBPAGE_URLS = [document.location.href];
+  // // // const DEFAULT_COUNT = 1; // how many local files to choose
+  // // // const SUPPLIED_OUTPUT_FILE_NAME_WITHOUT_EXTENSION = undefined;
+  // // // const SUPPLIED_LOCAL_FILE_PATHS = undefined || []; // TODO: persist this value in the extension because the resume will likely be reused. CRUD
   const body = {
     env_vars: {
-      WEBPAGE_URLS: DEFAULT_WEBPAGE_URLS
+      WEBPAGE_URLS: [document.location.href],
     },
-    "-c": DEFAULT_COUNT,
+    // "-n": SUPPLIED_OUTPUT_FILE_NAME_WITHOUT_EXTENSION,
+    "-n": `${document.title} resume`,
+    "-o": true,
+    "-x": true,
   }
-  // DEFAULT_COUNT = 0; // how many local files to choose
-  // DEFAULT_LOCAL_FILE_PATHS = ["/Users/bernadette/Downloads/Bernadette Davis Professional Resume Long.pdf"]; // TODO: persist this value in the extension because the resume will likely be reused. CRUD
-  // DEFAULT_OUTPUT_FILE_NAME_WITHOUT_EXTENSION = "output"; // TODO: make gui in chrome extension to set this value.
-  // DEFAULT_OUTPUT_DIRECTORY = "/Users/bernadette/Downloads";
-  // DEFAULT_TOGGLE_FLAGS = "ox"; // -o open combined; -x delete downloaded if both download and combine occurred
-  // DEFAULT_WEBPAGE_URLS = [document.location.href];
+  
+  // set -c if select resume selected option is new resume
+  if ([].length === 0) {
+    body["-c"] = 1;
+  } else {
+    body.env_vars.LOCAL_FILE_PATHS = ["/Users/bernadette/Downloads/Bernadette Davis Professional Resume Long.pdf"];
+  }
 
-  // const body = {
-  //   env_vars: {
-  //     LOCAL_FILE_PATHS: DEFAULT_LOCAL_FILE_PATHS, // -l and ignores -c
-  //     WEBPAGE_URLS: DEFAULT_WEBPAGE_URLS, // -w and overwrites url_args
-  //     OUTPUT_DIRECTORY: DEFAULT_OUTPUT_DIRECTORY, // or -d; can omit -d flag in the body here
-  //   },
-  //   TOGGLE_FLAGS: DEFAULT_TOGGLE_FLAGS,
-  //   "-n": DEFAULT_OUTPUT_FILE_NAME_WITHOUT_EXTENSION,
-  //   "-c": DEFAULT_COUNT,
-  // };
   console.log(`Sending:  ${body}`);
   port.postMessage(body);
   // port.postMessage("ping");
