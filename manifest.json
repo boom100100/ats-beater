@@ -1,13 +1,14 @@
 {
-  "name": "Google Chrome Extension Template (Rename me!)",
-  "description": "The description (update me!).",
+  "name": "ATS Beater",
+  "description": "Generate a resume that matches the right keywords.",
   "version": "0.0.1",
   "background": {
         "service_worker": "background.js"
     },
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "nativeMessaging"
   ],
   "action": {},
   "icons": {
