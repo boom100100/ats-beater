@@ -6,8 +6,18 @@
     title: document.title
   }, (response) => {
     // 3. Got an asynchronous response with the data from the service worker
-    console.log('received', response);
+    console.log('received response:');
+    console.log(response);
   });
+
+  const handleMessages = (message, sender, sendResponse) => {
+    console.log("handleMessages ran");
+    
+    console.log("message", message);
+    return true;
+  }
+  
+  chrome.runtime.onMessage.addListener(handleMessages);
   
   /*
   When submit is triggered, send the app a message.

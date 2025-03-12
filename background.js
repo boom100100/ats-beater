@@ -6,8 +6,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.runtime.sendNativeMessage(
       'com.automatedbooks.convert_and_combine_pdfs',
       {ping: "ping"},
-      function (response) {
-        console.log('Received ' + response);
+      function (sendNativeMessageResponse) {
+        // `.query` waits for the content script to be available.
+        // `.send` sends the message.
+        chrome.tabs.query({active: true, currentWindow: true},function(tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, {sendNativeMessageResponse}, function(sendMessageResponse) {
+              console.log(sendMessageResponse);
+          });
+        });
+        console.log('Received ' + sendNativeMessageResponse);
       }
     );
     sendResponse(`${message.title}\n${message.href}`);
