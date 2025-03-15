@@ -1,11 +1,10 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('Message received: ', message);
   // 2. A page requested  data, respond with that data
-  if (message.title) {
-    // gotta fix native host has exited
+  if (message["-n"] !== " resume") {
     chrome.runtime.sendNativeMessage(
       'com.automatedbooks.convert_and_combine_pdfs',
-      {ping: "ping"},
+      message,
       function (sendNativeMessageResponse) {
         // `.query` waits for the content script to be available.
         // `.send` sends the message.
@@ -20,6 +19,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse(`${message.title}\n${message.href}`);
     return true;
   }
+  sendResponse("The message is incomplete.");
   return true;
 });
 
