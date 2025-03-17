@@ -27,9 +27,9 @@
       // TODO: mvp: send the (url, resume local file, open, and delete) request
     
       // DEFAULT_COUNT = 1; // how many local files to choose
-      // DEFAULT_LOCAL_FILE_PATHS = ["/Users/bernadette/Downloads/Bernadette Davis Professional Resume Long.pdf"]; // resume file path // TODO: persist this value in the extension because the resume will likely be reused. CRUD
+      // DEFAULT_LOCAL_FILE_PATHS = ["/Users/<username-for-mac>/Downloads/Resume.pdf"]; // resume file path // TODO: persist this value in the extension because the resume will likely be reused. CRUD
       // DEFAULT_OUTPUT_FILE_NAME_WITHOUT_EXTENSION = "output"; // combined file name // TODO: make gui in chrome extension to set this value.
-      // DEFAULT_OUTPUT_DIRECTORY = "/Users/bernadette/Downloads"; // destination for generated files
+      // DEFAULT_OUTPUT_DIRECTORY = "./outputs"; // destination for generated files
       // DEFAULT_WEBPAGE_URLS = [document.location.href]; // webpages to convert to pdf, download, and combine
     
       // // // DEFAULT_WEBPAGE_URLS = [document.location.href];
@@ -55,7 +55,7 @@
       if (SUPPLIED_LOCAL_FILE_PATHS.length === 0) {
         body["-c"] = 1;
       } else {
-        body.env_vars.LOCAL_FILE_PATHS = ["/Users/bernadette/Downloads/Bernadette Davis Professional Resume Long.pdf"];
+        body.env_vars.LOCAL_FILE_PATHS = SUPPLIED_LOCAL_FILE_PATHS;
       }
     
       console.log("Sending:");
